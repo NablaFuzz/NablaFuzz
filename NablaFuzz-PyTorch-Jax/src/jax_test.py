@@ -17,7 +17,7 @@ def load_log_and_put(output_dir: Path, target_dir: Path, api_name):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Jax Auto-gradient Fuzzing")
+    parser = argparse.ArgumentParser(description="NablaFuzz for Jax")
 
     parser.add_argument(
         "--num",
@@ -56,10 +56,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    suffix = args.device
-    suffix += args.suffix
+    if args.suffix != "":
+        suffix = f"-{args.suffix}"
+    else:
+        suffix = ""
 
-    output_dir = Path("..", args.output, "jax", f"union-{suffix}")
+    output_dir = Path("..", args.output, "jax", f"union{suffix}")
     if args.clean and os.path.exists(output_dir):
         shutil.rmtree(output_dir)
 
@@ -91,7 +93,7 @@ if __name__ == "__main__":
         try:
             ret = sp.run(
                 [
-                    "python3.9",
+                    "python",
                     "jax_adtest.py",
                     "--api",
                     api_name,

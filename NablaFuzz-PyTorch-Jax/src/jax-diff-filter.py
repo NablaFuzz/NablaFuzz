@@ -34,7 +34,7 @@ def run_code(code):
 
 def run(file_name):
     try:
-        res = sp.run(["python3.9", file_name], timeout=60, capture_output=True)
+        res = sp.run(["python", file_name], timeout=60, capture_output=True)
     except sp.TimeoutExpired:
         return "Timeout", ""
     else:
@@ -269,8 +269,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--target",
         type=str,
-        default="union-cpu",
-        help="The output dir (default: union-cpu)",
+        default="union",
+        help="The output dir (default: union)",
     )
     args = parser.parse_args()
     target = args.target
