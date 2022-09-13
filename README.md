@@ -21,7 +21,7 @@ We provide a list of confirmed bug reports on [PyTorch](https://github.com/Nabla
 
 1. Our testing framework leverages [MongoDB](https://www.mongodb.com/) so you need to [install and run MongoDB](https://docs.mongodb.com/manual/installation/) first.
 
-	- After installing MongoDB and before loading the database, run the command `ulimit -n 200000` to adjust the limit that the system resources a process may use. You can see this [document](https://docs.mongodb.com/manual/reference/ulimit/) for more details.
+	- After installing MongoDB and before loading the database, run the command `ulimit -n 640000` to adjust the limit that the system resources a process may use. You can see this [document](https://docs.mongodb.com/manual/reference/ulimit/) for more details.
 
 2. Python version >= 3.9.0 (It must support f-string.)
 
@@ -46,6 +46,7 @@ Run the following commands in current directory (`NablaFuzz`) to load the databa
 ```shell
 mongorestore NablaFuzz-PyTorch-Jax/dump
 mongorestore NablaFuzz-Oneflow/dump
+mongorestore NablaFuzz-TensorFlow/dump
 ```
 
 
@@ -114,3 +115,21 @@ python oneflow_test.py --num $NUM_MUTANT --max_api $NUM_API
 ```
 
 The error code snippets will be put in `NablaFuzz-Oneflow/errors`. 
+
+
+#### TensorFlow
+
+First go into the `NablaFuzz-TensorFlow/src` directory,
+
+```shell
+cd NablaFuzz-TensorFlow/src
+```
+
+Run the following commands to start ∇Fuzz to test TensorFlow
+
+```shell
+python tf_adtest.py --num $NUM_MUTANT --max_api $NUM_API
+python tf_filter.py 
+```
+
+The outputs will be put in `NablaFuzz-TensorFlow/expr_outputs` by default. 
